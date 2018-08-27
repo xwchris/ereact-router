@@ -1,0 +1,30 @@
+{
+  "name": "simple-react-router",
+  "version": "1.0.0",
+  "description": "simple react router implement",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xwchris/simple-react-router.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xwchris/simple-react-router/issues"
+  },
+  "homepage": "https://github.com/xwchris/simple-react-router#readme",
+  "dependencies": {
+    "react": "^16.4.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
