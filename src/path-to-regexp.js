@@ -1,4 +1,4 @@
-const pathRegexp = (path, keys) => {
+const pathToRegexp = (path, keys = []) => {
   const regStr = '^' + path.replace(/\/:([^\/]+)/g, (_, name) => {
     keys.push({ name });
     return '/([^/]+)';
@@ -6,4 +6,4 @@ const pathRegexp = (path, keys) => {
   return new RegExp(regStr);
 }
 
-module.exports = pathRegexp;
+module.exports = pathToRegexp

@@ -5,50 +5,56 @@ This is an simple react router which is like [react-router](https://github.com/R
 You can clone the repo and build with this commands.
 
 ```command
-// clone to local
+// clone
 git clone git@github.com:xwchris/simple-react-router.git
 
-// move into the dir
 cd simple-react-router
 
-// install packages
+// install
 npm install
 
 // build
 npm run build
 ```
 
-Then, you will get `simple-react-router.js` which can be imported to you project.
+Then, you will get `/dist/simple-react-router.js` which can be imported to you project.
 
 ## API
-Like[react-router](https://github.com/ReactTraining/react-router), but [simple-react-router](https://github.com/xwchris/simple-react-router) only provide three components `BrowserRouter`, `Route` and `history`.
+Like [react-router](https://github.com/ReactTraining/react-router), but [simple-react-router](https://github.com/xwchris/simple-react-router) only provide three components `BrowserRouter`, `Route` and `history`.
 
 ### BrowserRouter
-- mode: the history mode. the value can be `history` or `hash`. default `hash`
+#### mode
+the history mode. the value can be `history` or `hash`. default `hash`
 
-```html
+```
 <BrowserRouter mode="history"></BrowserRouter>
 ```
 
 ### Route
-- path: when the url pathname match the path, it will render the component
-- component: the component to be rendered if matched
-- exact: only match if url pathname equals path. default `false`
+#### path
+when the url pathname match the path, it will render the component
 
-```html
+#### component
+the component to be rendered if matched
+
+#### exact
+only match if url pathname equals path. default `false`
+
+```
 // Person is and React Component
 <Route path="/person/:personId" component={Person}><Route>
 ```
 
 ### Link
-- to: the path you want to navigate
+#### to
+the path you want to navigate
 
-```html
+```
 <Link to="/">click me<Link>
 ```
 
 ### Usage
-Here is a example of simple-react-router
+Here is a [live example](https://codepen.io/xwchris/pen/PdNyJQ) of simple-react-router
 ```reactjs
 // react home.js
 

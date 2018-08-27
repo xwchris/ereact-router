@@ -1,38 +1,66 @@
-// remove the end slash of path
 const pathToRegexp = require('./path-to-regexp');
 const clearEndSlash = (path = '') => path.toString().replace(/\/$/, '') || '/';
 
 const Router = {
-  routes: [],
-  mode: null,
-  // router init config
+  routes: [], // 用来存放注册过的路由
+	mode: null, // 用来标识路由模式
   config: (options) => {
-    Router.mode = options && options.mode && options.mode === 'history' && !!history.pushState ? 'history' : 'hash';
-    return Router;
+		Router.mode = options && options.mode && options.mode === 'history' && !!history.pushState ? 'history' : 'hash';
+		return Router;
   },
-  match: (pathname, path) => {
-    const reg = Router.getPathParamsParser(pathname).reg;
-    return reg.test(path);
-  },
-  // add a route
   add: (pathname, handler) => {
-    const route = {
-      pathname: clearEndSlash(pathname),
-      handler
-    };
+		Router.routes.push({ pathname: clearEndSlash(pathname), handler });
+		return Router;
+	},
+	remove: (pathname) => {
+		Router.routes.forEach((route, index) => {
+			if (route.pathname === clearEndSlash(pathname)) {
+				Router.routes.splice(index, 1);
+			}
+		});
+		return Router;
+	},
+  match: (pathname, path) => {
+		const reg = pathToRegexp(pathname);
+		return reg.test(path);
+	},
+  current: () => {
+		if (Router.mode === 'history') {
+      return location.pathname;
+    }
 
-    Router.routes.push(route);
+    return location.hash;
+	},
+	listen: () => {
+		let currentPath = Router.current();
+
+		const fn = () => {
+			const nextPath = Router.current();
+			if (nextPath !== currentPath) {
+				currentPath = nextPath;
+
+				const routes = Router.routes.filter(route => Router.match(route.pathname, currentPath));
+				routes.forEach(route => route.handler(currentPath));
+			}
+		}
+
+		clearInterval(Router.interval);
+		Router.interval = setInterval(fn, 50);
+		return Router;
+  },
+  flush: () => {
+    Router.routes = [];
+    Router.mode = null;
+    Router.root = '/';
     return Router;
   },
-  // remove a route
-  remove: (pathname) => {
-    Router.routes.forEach((route, index) => {
-      if (route.path === clearEndSlash(pathname)) {
-        Router.routes.splice(index, 1);
-      }
-    });
-    return Router;
-  },
+  navigate: path => {
+		if (Router.mode === 'history') {
+			history.pushState(null, null, path);
+		} else {
+			window.location.href = window.location.href.replace(/#(.*)$/, '') + path;
+		}
+	},
   getPathParamsParser: (path) => {
     const keys = [];
     const reg = pathToRegexp(path, keys);
@@ -49,47 +77,6 @@ const Router = {
       });
     }
     return params;
-  },
-  // get current path
-  getCurrentPath: () => {
-    if (Router.mode === 'history') {
-      return location.pathname;
-    }
-
-    return location.hash;
-  },
-  flush: () => {
-    Router.routes = [];
-    Router.mode = null;
-    Router.root = '/';
-    return Router;
-  },
-  navigate: (path) => {
-    const to = path || Router.getCurrentPath();
-    if (Router.mode === 'history') {
-      history.pushState(null, null, to);
-    } else {
-      window.location.href = window.location.href.replace(/#(.*)$/, '') + to;
-    }
-    return Router;
-  },
-  // listen
-  listen: () => {
-    let currentPath = Router.getCurrentPath();
-
-    const fn = () => {
-      const nextPath = Router.getCurrentPath();
-      if (nextPath !== currentPath) {
-        currentPath = nextPath;
-
-        const currentRoutes = Router.routes.filter(route => Router.match(route.pathname, nextPath));
-
-        currentRoutes.forEach(route => route.handler(nextPath));
-      }
-    }
-    clearInterval(Router.interval);
-    Router.interval = setInterval(fn, 50);
-    return Router;
   }
 }
 

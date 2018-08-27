@@ -20,7 +20,8 @@ class BrowserRouter extends React.Component {
   }
 
   componentDidMount() {
-    const currentPath = Router.getCurrentPath();
+    const currentPath = Router.current();
+    console.log('current', currentPath);
     this.onChangeRouteContext(currentPath);
   }
 
