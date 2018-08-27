@@ -1,5 +1,7 @@
 const path = require('path');
 
+// todo: ignore react
+
 module.exports = {
   mode: 'production',
   entry: {
@@ -9,6 +11,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
+    library: '[name]',
+    libraryTarget: 'umd',
   },
   module: {
     rules: [
@@ -17,5 +21,6 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
-  }
+  },
+  externals: ["react"]
 }
