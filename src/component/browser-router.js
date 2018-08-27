@@ -1,6 +1,6 @@
 import React from 'react';
 import Router from '../router-core';
-import { LinkContext, RouteContext } from '../context';
+import { RouteContext } from '../context';
 
 const DEFAULT_ROUTE = { path: '/' };
 
@@ -11,9 +11,12 @@ class BrowserRouter extends React.Component {
     const mode = this.props.mode === 'history' ? 'history' : 'hash';
     Router.config({ mode }).listen();
 
-    this.state = { currentRoute: DEFAULT_ROUTE  };
-
     this.onChangeRouteContext = this.onChangeRouteContext.bind(this);
+
+    this.state = {
+      currentRoute: DEFAULT_ROUTE,
+      onChangeRouteContext: this.onChangeRouteContext
+    };
   }
 
   componentDidMount() {
@@ -22,21 +25,16 @@ class BrowserRouter extends React.Component {
   }
 
   onChangeRouteContext(path) {
-    if (path !== this.state.currentRoute.path) {
-      this.setState({
-        currentRoute: {
-          path
-        }
-      });
-    }
+    this.setState({
+      currentRoute: { path },
+      onChangeRouteContext: this.onChangeRouteContext
+    });
   }
 
   render() {
     return (
-      <RouteContext.Provider value={this.state.currentRoute}>
-        <LinkContext.Provider value={this.onChangeRouteContext}>
-          { this.props.children }
-        </LinkContext.Provider>
+      <RouteContext.Provider value={this.state}>
+        { this.props.children }
       </RouteContext.Provider>
     )
   }

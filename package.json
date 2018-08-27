@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/xwchris/simple-react-router.git"
   },
-  "author": "",
+  "author": "xwchris",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/xwchris/simple-react-router/issues"

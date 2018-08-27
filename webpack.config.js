@@ -1,11 +1,10 @@
 const path = require('path');
 
-// todo: ignore react
-
 module.exports = {
   mode: 'production',
   entry: {
     'simple-react-router': './src/index.js',
+    'path-to-regexp': './src/path-to-regexp.js',
     'router-core': './src/router-core.js',
   },
   output: {
