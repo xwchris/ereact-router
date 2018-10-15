@@ -1,35 +1,32 @@
-import React from 'react';
+import EReact from 'ereact';
 import Router from '../router-core';
-import { RouteContext } from '../context';
 
-let handler = null;
+class Route extends EReact.Component {
+  constructor(props) {
+    super(props);
 
-const Route = ({ path: pathname = '', component: RenderedComponent = () => {}, exact = false }) => (
-  <RouteContext.Consumer>
-    {
-      state => {
-        const route = state.currentRoute;
-        const fn = state.onChangeRouteContext;
+    const handler = this.props.onChangeRouteContext;
+    Router.add(this.props.pathname, path => handler(path));
+  }
 
-        if (!handler) {
-          handler = fn;
-          Router.add(pathname, path => {
-            handler(path);
-          });
-        }
+  render() {
+    const {
+        exact = false,
+        currentRoute,
+        path: pathname = '',
+        component: RenderedComponent = () => {}
+      } = this.props;
 
-        const path = route.path;
+    const path = currentRoute.path;
 
-        if (exact ? pathname === path : Router.match(pathname, path)) {
-          const pathParser = Router.getPathParamsParser(pathname);
-          const params = Router.getPathParams(pathParser, path) || {};
-          return <RenderedComponent match={{ params }} />;
-        }
-
-        return null;
-      }
+    if (exact ? pathname === path : Router.match(pathname, path)) {
+      const pathParser = Route.getPathParamsParser(pathname);
+      const params = Router.getPathParams(pathParser, path) || {};
+      return <RenderedComponent match={{ params }} />
     }
-  </RouteContext.Consumer>
-);
+
+    return null;
+  }
+}
 
 export default Route;

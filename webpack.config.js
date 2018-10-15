@@ -1,14 +1,14 @@
 const path = require('path');
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 module.exports = {
-  mode: 'production',
-  entry: {
-    'simple-react-router': './src/index.js',
-  },
+  mode,
+  devtool: mode === 'production' ? 'hidden-source-map' : 'cheap-module-eval-source-map',
+  entry: './src/index.js',
   output: {
+    filename: `ereact-router.${mode}.js`,
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js',
-    library: 'SimpleReactRouter',
+    library: 'EReactRouter',
     libraryTarget: 'umd',
   },
   module: {
@@ -19,5 +19,4 @@ module.exports = {
       }
     ]
   },
-  // externals: ["react"]
 }

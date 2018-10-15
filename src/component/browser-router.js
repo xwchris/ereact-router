@@ -1,10 +1,9 @@
-import React from 'react';
+import EReact from 'ereact';
 import Router from '../router-core';
-import { RouteContext } from '../context';
 
 const DEFAULT_ROUTE = { path: '/' };
 
-class BrowserRouter extends React.Component {
+class BrowserRouter extends EReact.Component {
   constructor(props) {
     super(props);
 
@@ -21,8 +20,11 @@ class BrowserRouter extends React.Component {
 
   componentDidMount() {
     const currentPath = Router.current();
-    console.log('current', currentPath);
     this.onChangeRouteContext(currentPath);
+  }
+
+  getChildContext() {
+    return this.state;
   }
 
   onChangeRouteContext(path) {
@@ -33,11 +35,7 @@ class BrowserRouter extends React.Component {
   }
 
   render() {
-    return (
-      <RouteContext.Provider value={this.state}>
-        { this.props.children }
-      </RouteContext.Provider>
-    )
+    return this.props.children || null;
   }
 }
 

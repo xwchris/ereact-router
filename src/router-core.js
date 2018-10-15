@@ -2,8 +2,8 @@ const pathToRegexp = require('./path-to-regexp');
 const clearEndSlash = (path = '') => path.toString().replace(/\/$/, '') || '/';
 
 const Router = {
-  routes: [], // 用来存放注册过的路由
-	mode: null, // 用来标识路由模式
+  routes: [],
+	mode: null,
   config: (options) => {
 		Router.mode = options && options.mode && options.mode === 'history' && !!history.pushState ? 'history' : 'hash';
 		return Router;
