@@ -1,4 +1,4 @@
-# simple-react-router
+# EReact-Router
 This is an simple react router which is like [react-router](https://github.com/ReactTraining/react-router)
 
 ## How to start
