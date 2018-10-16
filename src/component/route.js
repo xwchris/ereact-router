@@ -2,21 +2,22 @@ import EReact from 'ereact';
 import Router from '../router-core';
 
 class Route extends EReact.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    const handler = this.props.onChangeRouteContext;
-    Router.add(this.props.pathname, path => handler(path));
+    const { pathname, onChangeRouteContext } = this.context;
+    const handler = onChangeRouteContext;
+    Router.add(pathname, path => handler(path));
   }
 
   render() {
     const {
         exact = false,
-        currentRoute,
         path: pathname = '',
         component: RenderedComponent = () => {}
       } = this.props;
 
+    const currentRoute = this.context.currentRoute || {};
     const path = currentRoute.path;
 
     if (exact ? pathname === path : Router.match(pathname, path)) {
