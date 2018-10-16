@@ -1,7 +1,11 @@
-const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+'use strict';
 
-if (env === 'production') {
-  require('./dist/ereact-router.production');
+let EReactRouter = null;
+
+if (process.env.NODE_ENV === 'production') {
+  EReactRouter = require('./dist/ereact-router.production');
 } else {
-  require('./dist/ereact-router.development');
+  EReactRouter = require('./dist/ereact-router.development');
 }
+
+module.exports = EReactRouter.default || EReactRouter;
