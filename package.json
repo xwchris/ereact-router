@@ -1,6 +1,6 @@
 {
   "name": "ereact-router",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ereact router implement",
   "main": "./index",
   "scripts": {
@@ -25,7 +25,6 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
