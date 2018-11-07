@@ -4,6 +4,7 @@
   "description": "ereact router implement",
   "main": "./index",
   "scripts": {
+    "test": "jest",
     "clean": "rm -rf dist",
     "build-development": "NODE_ENV=development webpack",
     "build-production": "NODE_ENV=production webpack",
@@ -20,7 +21,7 @@
   },
   "homepage": "https://github.com/xwchris/ereact-router#readme",
   "dependencies": {
-    "ereact": "^1.1.0"
+    "ereact": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
