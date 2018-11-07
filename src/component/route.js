@@ -1,5 +1,4 @@
-import { createElement } from '../../src/render';
-import { Component } from '../../src/component';
+import { createElement, Component } from 'ereact';
 import Router from '../router-core';
 
 class Route extends Component {
