@@ -1,9 +1,9 @@
-import { createElement, Component } from 'ereact';
+import EReact from 'ereact';
 import Router from '../router-core';
 
 const DEFAULT_URL = '/';
 
-class BrowserRouter extends Component {
+class BrowserRouter extends EReact.Component {
   constructor(props) {
     super(props);
 

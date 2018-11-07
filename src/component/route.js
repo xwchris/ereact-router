@@ -1,7 +1,7 @@
-import { createElement, Component } from 'ereact';
+import EReact from 'ereact';
 import Router from '../router-core';
 
-class Route extends Component {
+class Route extends EReact.Component {
   constructor(props, context) {
     super(props, context);
 
