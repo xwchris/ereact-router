@@ -29,7 +29,6 @@ class BrowserRouter extends EReact.Component {
 
   addRoutePath(path) {
     Router.add(path, url => this.setState({ url }));
-    console.log(Router.routes);
   }
 
   render() {
