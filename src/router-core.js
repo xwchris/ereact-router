@@ -8,21 +8,21 @@ const Router = {
 		Router.mode = options && options.mode && options.mode === 'history' && !!history.pushState ? 'history' : 'hash';
 		return Router;
   },
-  add: (pathname, handler) => {
-		Router.routes.push({ pathname: clearEndSlash(pathname), handler });
+  add: (path, handler) => {
+		Router.routes.push({ path: clearEndSlash(path), handler });
 		return Router;
 	},
-	remove: (pathname) => {
+	remove: (path) => {
 		Router.routes.forEach((route, index) => {
-			if (route.pathname === clearEndSlash(pathname)) {
+			if (route.path === clearEndSlash(path)) {
 				Router.routes.splice(index, 1);
 			}
 		});
 		return Router;
 	},
-  match: (pathname, path) => {
-		const reg = pathToRegexp(pathname);
-		return reg.test(path);
+  match: (path, url) => {
+		const reg = pathToRegexp(path);
+		return reg.test(url);
 	},
   current: () => {
 		if (Router.mode === 'history') {
@@ -32,15 +32,15 @@ const Router = {
     return location.hash;
 	},
 	listen: () => {
-		let currentPath = Router.current();
+		let currentUrl = Router.current();
 
 		const fn = () => {
-			const nextPath = Router.current();
-			if (nextPath !== currentPath) {
-				currentPath = nextPath;
+			const nextUrl = Router.current();
+			if (nextUrl !== currentUrl) {
+				currentUrl = nextUrl;
 
-				const routes = Router.routes.filter(route => Router.match(route.pathname, currentPath));
-				routes.forEach(route => route.handler(currentPath));
+				const routes = Router.routes.filter(route => Router.match(route.path, currentUrl));
+				routes.forEach(route => route.handler(currentUrl));
 			}
 		}
 
@@ -54,22 +54,18 @@ const Router = {
     Router.root = '/';
     return Router;
   },
-  navigate: path => {
+  navigate: url => {
 		if (Router.mode === 'history') {
-			history.pushState(null, null, path);
+			history.pushState(null, null, url);
 		} else {
-			window.location.href = window.location.href.replace(/#(.*)$/, '') + path;
+			window.location.href = window.location.href.replace(/#(.*)$/, '') + url;
 		}
 	},
-  getPathParamsParser: (path) => {
-    const keys = [];
+	getUrlParams: (path, url) => {
+		const keys = [];
     const reg = pathToRegexp(path, keys);
-    return { reg, keys };
-  },
-  getPathParams: (paramsParser, path) => {
-    const params = {};
-    const { reg, keys } = paramsParser;
-    const values = path.match(reg);
+		const params = {};
+    const values = url.match(reg);
     if (values.length > 1) {
       values.shift();
       keys.forEach((key, index) => {
@@ -77,7 +73,7 @@ const Router = {
       });
     }
     return params;
-  }
+	}
 }
 
 export default Router;

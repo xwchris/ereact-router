@@ -1,32 +1,30 @@
-import EReact from 'ereact';
+import { createElement } from '../../src/render';
+import { Component } from '../../src/component';
 import Router from '../router-core';
 
-class Route extends EReact.Component {
+class Route extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { pathname, onChangeRouteContext } = this.context;
-    const handler = onChangeRouteContext;
-    Router.add(pathname, path => handler(path));
+    const { addRoutePath } = this.context;
+    addRoutePath(this.props.path);
   }
 
   render() {
     const {
-        exact = false,
-        path: pathname = '',
-        component: RenderedComponent = () => {}
-      } = this.props;
+      exact = false,
+      path = '',
+      component: RenderedComponent = () => <div></div>
+    } = this.props;
 
-    const currentRoute = this.context.currentRoute || {};
-    const path = currentRoute.path;
+    const url = this.context.url;
 
-    if (exact ? pathname === path : Router.match(pathname, path)) {
-      const pathParser = Route.getPathParamsParser(pathname);
-      const params = Router.getPathParams(pathParser, path) || {};
+    if (exact ? path === url : Router.match(path, url)) {
+      const params = Router.getUrlParams(path, url) || {};
       return <RenderedComponent match={{ params }} />
     }
 
-    return null;
+    return <div></div>;
   }
 }
 

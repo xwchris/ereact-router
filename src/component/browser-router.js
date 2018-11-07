@@ -1,41 +1,40 @@
-import EReact from 'ereact';
+import { createElement } from '../../src/render';
+import { Component } from '../../src/component';
 import Router from '../router-core';
 
-const DEFAULT_ROUTE = { path: '/' };
+const DEFAULT_URL = '/';
 
-class BrowserRouter extends EReact.Component {
+class BrowserRouter extends Component {
   constructor(props) {
     super(props);
 
     const mode = this.props.mode === 'history' ? 'history' : 'hash';
     Router.config({ mode }).listen();
 
-    this.onChangeRouteContext = this.onChangeRouteContext.bind(this);
+    this.addRoutePath = this.addRoutePath.bind(this);
 
-    this.state = {
-      currentRoute: DEFAULT_ROUTE,
-      onChangeRouteContext: this.onChangeRouteContext
-    };
+    this.state = { url: DEFAULT_URL };
   }
 
   componentDidMount() {
-    const currentPath = Router.current();
-    this.onChangeRouteContext(currentPath);
+    const url = Router.current();
+    this.setState({ url });
   }
 
   getChildContext() {
-    return this.state;
+    return {
+      url: this.state.url,
+      addRoutePath: this.addRoutePath
+    };
   }
 
-  onChangeRouteContext(path) {
-    this.setState({
-      currentRoute: { path },
-      onChangeRouteContext: this.onChangeRouteContext
-    });
+  addRoutePath(path) {
+    Router.add(path, url => this.setState({ url }));
+    console.log(Router.routes);
   }
 
   render() {
-    return this.props.children || null;
+    return this.props.children;
   }
 }
 

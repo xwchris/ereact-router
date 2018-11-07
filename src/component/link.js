@@ -1,7 +1,8 @@
-import EReact from 'ereact';
+import { createElement } from '../../src/render';
+import { Component } from '../../src/component';
 import Router from '../router-core';
 
-class Link extends EReact.Component {
+class Link extends Component {
   constructor(props) {
     super(props);
 
