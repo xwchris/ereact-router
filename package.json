@@ -1,6 +1,6 @@
 {
   "name": "ereact-router",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "ereact router implement",
   "main": "./index",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/xwchris/ereact-router#readme",
   "dependencies": {
-    "ereact": "^2.0.0"
+    "ereact": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
