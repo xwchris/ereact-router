@@ -21,12 +21,12 @@ class Route extends EReact.Component {
       component: RenderedComponent = () => <div></div>
     } = this.props;
 
-    const url = this.context.url;
+    const { url, search } = this.context;
 
     if (exact ? path === url : Router.match(path, url)) {
       const params = Router.getUrlParams(path, url) || {};
 
-      return <RenderedComponent match={{ params }} />
+      return <RenderedComponent match={{ params, search }} />
     }
 
     return <div></div>;

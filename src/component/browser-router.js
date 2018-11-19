@@ -12,17 +12,22 @@ class BrowserRouter extends EReact.Component {
 
     this.addRoutePath = this.addRoutePath.bind(this);
 
-    this.state = { url: DEFAULT_URL };
+    this.state = { url: DEFAULT_URL, search: '' };
   }
 
   componentDidMount() {
     const url = Router.current();
-    this.setState({ url });
+    const search = Router.getUrlSearch();
+    this.setState({
+      url,
+      search
+    });
   }
 
   getChildContext() {
     return {
       url: this.state.url,
+      search: this.state.search,
       addRoutePath: this.addRoutePath
     };
   }
