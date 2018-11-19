@@ -1,12 +1,17 @@
 import EReact from 'ereact';
 import Router from '../router-core';
 
+let hasAdded = false;
+
 class Route extends EReact.Component {
   constructor(props, context) {
     super(props, context);
 
     const { addRoutePath } = this.context;
-    addRoutePath(this.props.path);
+    if (!hasAdded) {
+      addRoutePath(this.props.path);
+      hasAdded = true;
+    }
   }
 
   render() {
@@ -20,6 +25,7 @@ class Route extends EReact.Component {
 
     if (exact ? path === url : Router.match(path, url)) {
       const params = Router.getUrlParams(path, url) || {};
+
       return <RenderedComponent match={{ params }} />
     }
 

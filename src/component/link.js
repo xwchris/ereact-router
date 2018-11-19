@@ -15,9 +15,9 @@ class Link extends EReact.Component {
   }
 
   render() {
-    const { to = '', children = null } = this.props;
+    const { to = '', children = null, ...rest } = this.props;
 
-    return <a href={to} onClick={this.onClickLink}>{children}</a>;
+    return <a href={to} onClick={this.onClickLink} {...rest}>{children}</a>;
   }
 }
 
