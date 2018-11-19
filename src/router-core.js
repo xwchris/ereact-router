@@ -61,6 +61,9 @@ const Router = {
 			window.location.href = window.location.href.replace(/#(.*)$/, '') + url;
 		}
 	},
+	getUrlSearch: () => {
+		return location && location.search || ''
+	},
 	getUrlParams: (path, url) => {
 		const keys = [];
     const reg = pathToRegexp(path, keys);
